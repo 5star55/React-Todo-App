@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-export default function Task({ setEditTodo }) {
+export default function Task({ setEditTodo: any}) {
   const queryClient = useQueryClient();
 
   const fetchTodos = async () => {
@@ -15,7 +15,7 @@ export default function Task({ setEditTodo }) {
     if (!res.ok) throw new Error("Error fetching todos");
     const data = await res.json();
 
-    const todos = data.map((post) => ({
+    const todos = data.map((post:any) => ({
       id: post.id,
       title: post.title,
       completed: false,
@@ -29,12 +29,11 @@ export default function Task({ setEditTodo }) {
     queryKey: ["todos"],
     queryFn: fetchTodos,
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
-  const deleteTask = (id) => {
+  const deleteTask = (id: any) => {
     const oldTodos = queryClient.getQueryData(["todos"]) || [];
-    const newTodos = oldTodos.filter((todo) => todo.id !== id);
+    const newTodos = oldTodos.filter((todo: any) => todo.id !== id);
     queryClient.setQueryData(["todos"], newTodos);
     localStorage.setItem("todos", JSON.stringify(newTodos));
   };
@@ -43,7 +42,7 @@ export default function Task({ setEditTodo }) {
 
   return (
     <ul className="space-y-2">
-      {todos?.map((todo) => (
+      {todos?.map((todo: any) => (
         <li
           key={todo.id}
           className="flex justify-between items-center bg-slate-100 p-3 rounded-lg hover:bg-slate-200"

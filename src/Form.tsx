@@ -12,7 +12,7 @@ export default function Form({ editTodo, setEditTodo }) {
     }
   }, [editTodo]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     const oldTodos = queryClient.getQueryData(["todos"]) || [];
 
