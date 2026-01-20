@@ -2,7 +2,12 @@ import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
-export default function Task({ setEditTodo: any}) {
+
+interface TaskProps {
+  setEditTodo: (todo: any) => void;
+}
+
+export default function Task({ setEditTodo }: TaskProps) {
   const queryClient = useQueryClient();
 
   const fetchTodos = async () => {
@@ -15,7 +20,7 @@ export default function Task({ setEditTodo: any}) {
     if (!res.ok) throw new Error("Error fetching todos");
     const data = await res.json();
 
-    const todos = data.map((post:any) => ({
+    const todos = data.map((post: any) => ({
       id: post.id,
       title: post.title,
       completed: false,
@@ -25,14 +30,14 @@ export default function Task({ setEditTodo: any}) {
     return todos;
   };
 
-  const { data: todos, isLoading } = useQuery({
+  const { data: todos, isLoading } = useQuery<any[]>({
     queryKey: ["todos"],
     queryFn: fetchTodos,
     staleTime: Infinity,
   });
 
   const deleteTask = (id: any) => {
-    const oldTodos = queryClient.getQueryData(["todos"]) || [];
+    const oldTodos = queryClient.getQueryData<any[]>(["todos"]) || [];
     const newTodos = oldTodos.filter((todo: any) => todo.id !== id);
     queryClient.setQueryData(["todos"], newTodos);
     localStorage.setItem("todos", JSON.stringify(newTodos));
