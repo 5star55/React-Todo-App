@@ -30,7 +30,7 @@ export default function Form({ editTodo, setEditTodo }: FormProps) {
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
       setEditTodo(null);
     } else {
-      const newTodo = { id: Date.now(), title: task, completed: false };
+      const newTodo = { id: Date.now(), title: task};
       const updatedTodos = [...oldTodos, newTodo];
       queryClient.setQueryData(["todos"], updatedTodos);
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
